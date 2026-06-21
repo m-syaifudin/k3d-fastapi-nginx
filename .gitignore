@@ -1,0 +1,5 @@
+.venv/
+__pycache__/
+
+app/__pycahce__
+app/routers/__pycache__

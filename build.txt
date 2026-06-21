@@ -1,0 +1,4 @@
+docker rm fastapi-app
+docker build -t fastapi-crud .
+docker run -d --name fastapi-app -p 8000:8000 -e DATABASE_URL=postgresql://postgres:password@host.containers.internal:5432/cruddb fastapi-crud
+docker logs fastapi-app

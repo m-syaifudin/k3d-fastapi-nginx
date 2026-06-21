@@ -1,0 +1,31 @@
+version: "3.8"
+
+services:
+  db:
+    image: postgres
+    container_name: postgres-dev
+    environtment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: cruddb
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+  
+  api:
+    build: .
+    container_name: fastapi-app
+    ports:
+      - "8000:8000"
+    environment:
+      #  inside compose, containers talk to each other 
+      # by service name. 
+      # So instead of host.containers.internal we just 
+      # use db.
+      DATABASE_URL: postgresql://postgres:password@db:5432/cruddb
+    depends_on:
+      - db
+
+volumes:
+  pgdata:
