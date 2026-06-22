@@ -42,5 +42,5 @@ jobs:
           username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.VPS_SSH_KEY }}
           script: |
-            kubectl set image deployment/fastapi-app fastapi-app=ghcr.io/${{ github.repository }}:latest -n fastapi
+            kubectl set image deployment/fastapi-app fastapi-app=ghcr.io/m-syaifudin/k3d-fastapi-nginx:latest -n fastapi
             kubectl rollout status deployment/fastapi-app -n fastapi
