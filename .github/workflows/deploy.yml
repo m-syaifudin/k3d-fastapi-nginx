@@ -32,7 +32,7 @@ jobs:
         with:
           context: .
           push: true
-          tags: ghcr.io/m-syaifudin/k3d-fastapi-nginx:latest
+          tags: ghcr.io/m-syaifudin/k3d-fastapi-nginx:${{ github.sha }}
 
       #  SSHes into your VPS and tells Kubernetes to use the new image.
       - name: Deploy to VPS
@@ -44,5 +44,7 @@ jobs:
           passphrase: ${{ secrets.SSH_PASSPHRASE }}
           port: 2702
           script: |
-            kubectl set image deployment/fastapi-app fastapi-app=ghcr.io/m-syaifudin/k3d-fastapi-nginx:latest -n fastapi
+            kubectl set image deployment/fastapi-app \
+              fastapi-app=ghcr.io/m-syaifudin/k3d-fastapi-nginx:${{ github.sha }} \
+              -n fastapi
             kubectl rollout status deployment/fastapi-app -n fastapi
