@@ -44,6 +44,7 @@ jobs:
           passphrase: ${{ secrets.SSH_PASSPHRASE }}
           port: 2702
           script: |
+            kubectl create namespace fastapi --dry-run=client -o yaml | kubectl apply -f -
             kubectl set image deployment/fastapi-app \
               fastapi-app=ghcr.io/m-syaifudin/k3d-fastapi-nginx:${{ github.sha }} \
               -n fastapi
