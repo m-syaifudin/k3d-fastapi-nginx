@@ -16,6 +16,7 @@ spec:
       containers:
         - name: fastapi-app
           image: ghcr.io/m-syaifudin/k3d-fastapi-nginx:latest
+          imagePullPolicy: Always
           ports:
             - containerPort: 8000
           env:
