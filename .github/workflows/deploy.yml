@@ -44,7 +44,19 @@ jobs:
           passphrase: ${{ secrets.SSH_PASSPHRASE }}
           port: 2702
           script: |
-            kubectl create namespace fastapi --dry-run=client -o yaml | kubectl apply -f -
+            # Clone or pull latest manifests
+            if [ -d "k3d-fastapi-nginx" ]; then
+              cd k3d-fastapi-nginx && git pull
+            else
+              git clone https://github.com/m-syaifudin/k3d-fastapi-nginx.git
+              cd k3d-fastapi-nginx
+            fi
+
+            # Apply manifests (creates namespace + deployment if not exist)
+            kubectl apply -f k8s/namespace.yaml
+            kubectl apply -f k8s/
+
+            # Update image
             kubectl set image deployment/fastapi-app \
               fastapi-app=ghcr.io/m-syaifudin/k3d-fastapi-nginx:${{ github.sha }} \
               -n fastapi
