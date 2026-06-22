@@ -3,3 +3,9 @@ __pycache__/
 
 app/__pycahce__
 app/routers/__pycache__
+
+*.pyc
+.env
+
+k8s/secret.yaml
+
